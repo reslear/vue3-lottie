@@ -1,20 +1,18 @@
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import VueTypeImports from 'vite-plugin-vue-type-imports'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+// import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+import { libInjectCss } from 'vite-plugin-lib-inject-css';
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [
     Vue(),
-    VueTypeImports(),
-    cssInjectedByJsPlugin(),
+    //cssInjectedByJsPlugin(),
+    libInjectCss(),
     dts({
       insertTypesEntry: true,
       copyDtsFiles: false,
-      skipDiagnostics: false,
-      logDiagnostics: true,
       cleanVueFileName: true,
     }),
   ],
@@ -25,13 +23,12 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['vue', 'lottie-web'],
+      external: ['vue', 'lottie-web/build/player/lottie_light.min.js', '@reslear/dotlottie-player-core'],
       output: {
         exports: 'named',
-        globals: {
-          vue: 'Vue',
-          'lottie-web': 'Lottie',
-        },
+       // chunkFileNames: 'chunks/[name].[hash].[extname]',
+        assetFileNames: 'assets/[name][extname]',
+       // entryFileNames: '[name].[extname]',
       },
     },
   },

@@ -16,10 +16,10 @@ import {
   watch,
   shallowRef,
   onUnmounted,
-  useAttrs,
 } from 'vue'
 
-import Lottie from 'lottie-web'
+// @ts-ignore
+import Lottie from 'lottie-web/build/player/lottie_light.min.js'
 
 import { parseData } from './utils'
 import { fetchLottie } from '@reslear/dotlottie-player-core'
@@ -27,7 +27,6 @@ import { fetchLottie } from '@reslear/dotlottie-player-core'
 import type {
   AnimationDirection,
   AnimationItem,
-  AnimationSegment,
   LottieProps,
 } from './types'
 
@@ -58,22 +57,12 @@ const emit = defineEmits<{
   (event: 'animation-loaded'): void
 }>()
 
-const attrs = useAttrs()
 
 let lottieAnimation: AnimationItem | null = null
 const root = ref<HTMLElement | null>(null)
 
 let direction: AnimationDirection = 1
 const animationData = shallowRef<null | object>(null)
-
-// hack fix supplement for ssr
-const checkIfContainerExists = (elementID: String) => {
-  if (document.querySelector(`[data-id="${elementID}" ]`) !== null) {
-    return true
-  } else {
-    return false
-  }
-}
 
 const loadLottie = async (element: Element) => {
   let autoPlay = props.autoPlay
@@ -259,103 +248,11 @@ watch(
   },
 )
 
-// method to play the animation
-const play = () => {
-  if (lottieAnimation) {
-    lottieAnimation.play()
-  }
-}
-
-// method to pause the animation
-const pause = () => {
-  if (lottieAnimation) {
-    lottieAnimation.pause()
-  }
-}
-
-// method to stop the animation. It will reset the animation to the first frame
-const stop = () => {
-  if (lottieAnimation) {
-    lottieAnimation.stop()
-  }
-}
-
 const destroy = () => {
   if (!lottieAnimation) return
 
   lottieAnimation.destroy()
   lottieAnimation = null
-}
-
-const setSpeed = (speed: number = 1) => {
-  // speed: 1 is normal speed.
-
-  if (speed <= 0) {
-    throw new Error('Speed must be greater than 0')
-  }
-
-  if (lottieAnimation) {
-    lottieAnimation.setSpeed(speed)
-  }
-}
-
-const setDirection = (direction: 'forward' | 'reverse') => {
-  if (lottieAnimation) {
-    if (direction === 'forward') {
-      lottieAnimation.setDirection(1)
-    } else if (direction === 'reverse') {
-      lottieAnimation.setDirection(-1)
-    }
-  }
-}
-
-const goToAndStop = (frame: number, isFrame: boolean = true) => {
-  //value: numeric value.
-  //isFrame: defines if first argument is a time based value or a frame based (default true).
-
-  if (lottieAnimation) {
-    lottieAnimation.goToAndStop(frame, isFrame)
-  }
-}
-
-const goToAndPlay = (frame: number, isFrame: boolean = true) => {
-  //value: numeric value
-  //isFrame: defines if first argument is a time based value or a frame based (default true).
-
-  if (lottieAnimation) {
-    lottieAnimation.goToAndPlay(frame, isFrame)
-  }
-}
-
-const playSegments = (
-  segments: AnimationSegment[],
-  forceFlag: boolean = false,
-) => {
-  //segments: array. Can contain 2 numeric values that will be used as first and last frame of the animation. Or can contain a sequence of arrays each with 2 numeric values.
-  //forceFlag: boolean. If set to false, it will wait until the current segment is complete. If true, it will update values immediately.
-
-  if (lottieAnimation) {
-    lottieAnimation.playSegments(segments, forceFlag)
-  }
-}
-
-const setSubFrame = (useSubFrame: boolean = true) => {
-  // useSubFrames: If false, it will respect the original AE fps. If true, it will update on every requestAnimationFrame with intermediate values. Default is true.
-  if (lottieAnimation) {
-    lottieAnimation.setSubframe(useSubFrame)
-  }
-}
-
-const getDuration = (inFrames: boolean = true) => {
-  if (lottieAnimation) {
-    return lottieAnimation.getDuration(inFrames)
-  }
-}
-
-const updateDocumentData = (documentData: any, index: number = 0) => {
-  if (lottieAnimation) {
-    lottieAnimation.renderer.elements[index].updateDocumentData(documentData)
-  }
 }
 
 const setupLottie = () => {

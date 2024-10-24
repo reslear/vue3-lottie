@@ -1,9 +1,12 @@
 {
   "name": "@reslear/vue3-lottie",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "license": "MIT",
-  "author": "Sanjay Soundarajan <info@sanjaysoundarajan.dev> (https://sanjaysoundarajan.dev)",
+  "author": "reslear",
   "type": "module",
+  "module": "./dist/vue3-lottie.js",
+  "main": "./dist/vue3-lottie.cjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vue3-lottie.js",
@@ -11,11 +14,11 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "main": "dist/vue3-lottie.cjs",
-  "module": "dist/vue3-lottie.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist/*"
+  ],
+  "sideEffects": [
+    "**/*.css"
   ],
   "scripts": {
     "dev": "vite build --watch",
@@ -25,31 +28,43 @@
     "prettier": "npx prettier --write ."
   },
   "dependencies": {
-    "@reslear/dotlottie-player-core": "^0.0.5",
-    "lodash": "^4.17.21",
-    "lottie-web": "^5.9.6"
+    "@reslear/dotlottie-player-core": "^1.0.3",
+    "lottie-web": "^5.12.2",
+    "vite-plugin-lib-inject-css": "^2.1.1"
   },
   "devDependencies": {
-    "@babel/types": "7.20.7",
-    "@types/lodash": "4.14.191",
-    "@types/node": "18.11.19",
-    "@vitejs/plugin-vue": "~3.1.2",
-    "@vue/compiler-sfc": "~3.2.40",
-    "typescript": "4.9.5",
-    "vite": "~3.1.6",
-    "vite-plugin-css-injected-by-js": "~2.1.0",
-    "vite-plugin-dts": "~3.8.1",
-    "vite-plugin-vue-type-imports": "~0.2.3",
-    "vue": "~3.2.47"
+    "@types/node": "22.7.9",
+    "@vitejs/plugin-vue": "~5.1.4",
+    "@vue/compiler-sfc": "~3.5.12",
+    "typescript": "5.6.3",
+    "vite": "~5.4.10",
+    "vite-plugin-css-injected-by-js": "~3.5.2",
+    "vite-plugin-dts": "~4.3.0",
+    "vue": "~3.5.12"
   },
   "peerDependencies": {
-    "vue": "^3.2"
+    "vue": ">=3"
   },
   "engines": {
     "node": ">=12"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  }
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reslear/vue3-lottie.git"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "lottie",
+    "lottie-web",
+    "lottie-light",
+    "animation",
+    "player",
+    "lottiefiles",
+    "dotlottie",
+    ".lottie"
+  ]
 }

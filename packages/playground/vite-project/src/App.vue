@@ -8,10 +8,11 @@
   <h2>Static Asset</h2>
   <Vue3Lottie :animationLink="thirdAnim" :height="200" />
 
+  <button @click="switchJson()">Change file</button>
+
   <h2>Dot lottie external file</h2>
   <Vue3Lottie :animationLink="dotLottieFile" :height="200" />
 
-  <button @click="switchJson()">Change file</button>
 
   <Vue3Lottie :animationData="DogJSON" :height="300" @click="log('click')" />
   <Vue3Lottie
